@@ -9,16 +9,15 @@ import cv2
 import numpy as np
 from PIL import Image
 
-from track2 import cv as cvmod
-from track2 import mixfix
-from track2.cv import DEFAULT_BARE_RGB, measure
-from track2.machine import StepMachine
-from track2.schema import Step, Verdict
-from track2.simulate import SimFeed, run
-from track2.watcher import Watcher, _small_gray
+from lesson import cv as cvmod
+from lesson import mixfix
+from lesson.cv import DEFAULT_BARE_RGB, measure
+from lesson.machine import StepMachine
+from lesson.schema import Step
+from lesson.simulate import SimFeed, run
+from lesson.watcher import Watcher, _small_gray
 
 W, H = 120, 80
-READY = Verdict(verdict="READY", category="none", adjustment="")
 
 
 def make_ref() -> np.ndarray:
@@ -84,18 +83,6 @@ class MeasureTest(unittest.TestCase):
         self.assertEqual(cvmod.estimate_bare_rgb(np.full((4, 4, 3), (200, 190, 180), np.uint8)), (200, 190, 180))
 
 
-class MachineReplaceTest(unittest.TestCase):
-    def test_replace_remaining_keeps_finished_steps_and_resets_tries(self) -> None:
-        m = StepMachine([make_step(1, "a"), make_step(2, "b"), make_step(3, "c")])
-        m.submit(READY)
-        for _ in range(3):
-            m.submit(Verdict(verdict="ADJUST", category="value", adjustment="x"))
-        self.assertEqual((m.status, m.state["tries"]), ("active", 3))
-        m.replace_remaining([make_step(2, "b2"), make_step(3, "c2")])
-        self.assertEqual((m.status, m.state["tries"], [s.name for s in m.steps]), ("active", 0, ["a", "b2", "c2"]))
-        self.assertEqual(m.current.name, "b2")
-
-
 class MixFixTest(unittest.TestCase):
     def test_added_parts_reach_the_reference_lightness(self) -> None:
         t, lc, lr, lp = 10, 50.0, 60.0, 96.0
@@ -113,10 +100,10 @@ class MixFixTest(unittest.TestCase):
     def test_advice_picks_white_to_lighten_and_the_mixs_darkest_to_darken(self) -> None:
         step = Step(**{**make_step(1, "sky").model_dump(),
                        "mix": [{"pigment": "titanium white", "parts": 4},
-                               {"pigment": "ultramarine blue", "parts": 2}]})
+                               {"pigment": "phthalo blue", "parts": 2}]})
         self.assertIn("titanium white", mixfix.advise(step, 40.0, 60.0))
         self.assertIn("too dark", mixfix.advise(step, 40.0, 60.0))
-        self.assertIn("ultramarine blue", mixfix.advise(step, 70.0, 50.0))
+        self.assertIn("phthalo blue", mixfix.advise(step, 70.0, 50.0))
         self.assertIn("6-part mix", mixfix.advise(step, 70.0, 50.0))
 
 
@@ -146,28 +133,23 @@ class WatcherTest(unittest.TestCase):
             Image.fromarray(m).save(self.dir / "layers" / f"{i}.png")
             self.masks.append(m)
         self.steps = [make_step(1, "sky"), make_step(2, "ground")]
-        self.calls = 0
         self.feed = SimFeed((W, H))
 
     def tearDown(self) -> None:
         self.tmp.cleanup()
 
-    def watcher(self, critique_result: Verdict = READY) -> Watcher:
-        def fake(canvas, step, mask):
-            self.calls += 1
-            return critique_result
-        return Watcher(StepMachine(self.steps), self.ref, self.dir, self.feed.capture, fake)
+    def watcher(self) -> Watcher:
+        return Watcher(StepMachine(self.steps), self.ref, self.dir, self.feed.capture)
 
     def test_hand_in_frame_never_triggers_a_check(self) -> None:
         w = self.watcher()
         events = run(w, self.feed, [(paint(self.ref, self.masks[0]), 20.0, 0.0)])
-        self.assertEqual((events, self.calls), ([], 0))
+        self.assertEqual(events, [])
 
-    def test_complete_step_advances_after_settling_with_one_gemini_call(self) -> None:
+    def test_complete_step_advances_after_settling(self) -> None:
         w = self.watcher()
         events = run(w, self.feed, [(paint(self.ref, self.masks[0]), 2.0, 10.0)])
         self.assertEqual([e.kind for _, e in events], ["advanced"])
-        self.assertEqual(self.calls, 1)
         self.assertEqual(w.machine.current.index, 2)
         self.assertGreaterEqual(events[0][0], 2.0 + w.cfg.settle_s)  # not before the settle time
 
@@ -180,9 +162,8 @@ class WatcherTest(unittest.TestCase):
         self.assertEqual([(e.kind, e.verdict.category, e.source) for _, e in events],
                          [("correction", "coverage", "cv")])
         self.assertTrue(events[0][1].missing.any())
-        self.assertEqual(self.calls, 0)                         # no API call for a CV correction
 
-    def test_too_dark_gives_value_correction_without_gemini(self) -> None:
+    def test_too_dark_gives_value_correction(self) -> None:
         w = self.watcher()
         events = run(w, self.feed, [(paint(self.ref, self.masks[0], scale=0.5), 1.0, 10.0)])
         self.assertEqual([(e.kind, e.verdict.category, e.source) for _, e in events],
@@ -190,8 +171,7 @@ class WatcherTest(unittest.TestCase):
         ev = events[0][1]
         self.assertIn("too dark", ev.verdict.adjustment)
         self.assertIn("part", ev.verdict.adjustment)          # a concrete mix fix, not just "lighten"
-        self.assertTrue(ev.off_value.any() and ev.missing is None)  # a map of where, for the projector
-        self.assertEqual(self.calls, 0)
+        self.assertTrue(ev.off_value.any() and ev.missing is None)  # a map of where
 
     def test_correction_is_not_repeated_until_the_canvas_changes(self) -> None:
         w = self.watcher()
@@ -201,42 +181,6 @@ class WatcherTest(unittest.TestCase):
         fixed = paint(self.ref, self.masks[0])
         events = run(w, self.feed, [(fixed, 2.0, 10.0)], t0=40.0)
         self.assertEqual([e.kind for _, e in events], ["advanced"])  # response to the change
-
-    def test_gemini_adjust_is_emitted_immediately(self) -> None:
-        w = self.watcher(Verdict(verdict="ADJUST", category="stroke_direction", adjustment="Paint horizontally."))
-        events = run(w, self.feed, [(paint(self.ref, self.masks[0]), 1.0, 8.0)])
-        self.assertEqual([(e.kind, e.source) for _, e in events], [("correction", "gemini")])
-
-    def test_gemini_cannot_override_cv_on_coverage_or_value(self) -> None:
-        w = self.watcher(Verdict(verdict="ADJUST", category="coverage", adjustment="Fill it in."))
-        events = run(w, self.feed, [(paint(self.ref, self.masks[0]), 1.0, 8.0)])
-        self.assertEqual([e.kind for _, e in events], ["advanced"])
-
-    def test_resting_hand_blocks_the_check_until_it_leaves(self) -> None:
-        w = self.watcher()
-        done = paint(self.ref, self.masks[0])
-        self.feed.resting_hand = True
-        events = run(w, self.feed, [(done, 1.0, 20.0)])        # hand sits on the canvas, perfectly still
-        self.assertEqual((events, self.calls), ([], 0))
-        self.feed.resting_hand = False
-        events = run(w, self.feed, [(done, 0.0, 6.0)], t0=30.0)  # hand leaves: capture now clean
-        self.assertEqual([e.kind for _, e in events], ["advanced"])
-
-    def test_change_outside_the_step_region_is_an_obstruction_for_a_while(self) -> None:
-        w = self.watcher()
-        w.cfg.outside_change_blocks = True                       # opt-in: off by default
-        step1 = paint(self.ref, self.masks[0])
-        run(w, self.feed, [(paint(self.ref, self.masks[0], rows_frac=0.2), 1.0, 5.0)])  # a first accepted capture
-        stray = step1.copy()
-        stray[H // 2 + 5:H - 5, 10:W - 10] = (30, 30, 30)       # something dark lying on the later step's area
-        events = run(w, self.feed, [(stray, 1.0, 8.0)], t0=12.0)
-        self.assertEqual((events, self.calls), ([], 0))          # skipped, not judged
-
-    def test_hand_resting_outside_the_region_does_not_hold_the_check_up(self) -> None:
-        w = self.watcher()
-        self.feed.rest_at = (0.5, 0.85)                          # on step 2's area, step 1 is current
-        events = run(w, self.feed, [(paint(self.ref, self.masks[0]), 1.0, 6.0)])
-        self.assertEqual([e.kind for _, e in events], ["advanced"])
 
     def test_hand_moving_outside_the_region_does_not_reset_the_settle_timer(self) -> None:
         w = self.watcher()
@@ -251,9 +195,9 @@ class WatcherTest(unittest.TestCase):
         w = self.watcher()
         self.feed.hand_box = (0.3, 0.7, 0.1, 0.3)                # inside step 1's region
         events = run(w, self.feed, [(paint(self.ref, self.masks[0]), 20.0, 0.0)])
-        self.assertEqual((events, self.calls), ([], 0))
+        self.assertEqual(events, [])
 
-    def test_three_strikes_without_a_replan_keep_correcting(self) -> None:
+    def test_three_strikes_keep_correcting(self) -> None:
         w = self.watcher()
         t = 0.0
         kinds = []
@@ -263,57 +207,6 @@ class WatcherTest(unittest.TestCase):
             t += 20.0
         self.assertEqual(kinds, ["correction", "correction", "correction"])
         self.assertEqual((w.machine.status, w.machine.state["tries"]), ("active", 3))
-
-    def _stuck_run(self, w: Watcher):
-        kinds, t = [], 0.0
-        for scale in (0.5, 0.45, 0.4):
-            ev = run(w, self.feed, [(paint(self.ref, self.masks[0], scale=scale), 1.0, 12.0)], t0=t)
-            kinds += [e for _, e in ev]
-            t += 20.0
-        return kinds
-
-    def test_stuck_step_is_replanned_once_and_the_session_continues(self) -> None:
-        revised = [make_step(1, "sky, simpler"), make_step(2, "ground")]
-        asked = []
-
-        def replan(position, history, canvas):
-            asked.append((position, len(history), canvas.shape))
-            return revised
-
-        w = self.watcher()
-        w._replan = replan
-        events = self._stuck_run(w)
-        self.assertEqual([e.kind for e in events], ["correction", "correction", "replanned"])
-        self.assertEqual(events[-1].new_steps, revised)
-        self.assertEqual((w.machine.status, w.machine.state["tries"], w.machine.current.name),
-                         ("active", 0, "sky, simpler"))
-        self.assertEqual(asked[0][0], 0)
-        self.assertEqual(asked[0][2][:2], (H, W))                  # got the last real canvas, not a dummy
-
-    def test_second_struggle_on_the_same_step_is_not_replanned_again(self) -> None:
-        w = self.watcher()
-        w._replan = lambda *a: [make_step(1, "sky, simpler"), make_step(2, "ground")]
-        self._stuck_run(w)                                          # first stuck -> replanned
-        kinds, t = [], 100.0
-        for scale in (0.35, 0.3, 0.25):
-            ev = run(w, self.feed, [(paint(self.ref, self.masks[0], scale=scale), 1.0, 12.0)], t0=t)
-            kinds += [e.kind for _, e in ev]
-            t += 20.0
-        self.assertEqual(kinds, ["correction", "correction", "correction"])
-        self.assertEqual(w.machine.status, "active")
-
-    def test_a_failing_replan_keeps_the_plan_and_says_so(self) -> None:
-        def boom(*a):
-            raise RuntimeError("api down")
-
-        w = self.watcher()
-        w._replan = boom
-        logs = []
-        w._log = logs.append
-        events = self._stuck_run(w)
-        self.assertEqual([e.kind for e in events], ["correction", "correction", "correction"])
-        self.assertEqual((w.machine.status, w.machine.current.name), ("active", "sky"))
-        self.assertTrue(any("re-plan of step 1 failed" in m for m in logs))
 
     def test_steady_coverage_progress_is_not_a_strike(self) -> None:
         w = self.watcher()
@@ -347,15 +240,6 @@ class WatcherTest(unittest.TestCase):
         done = run(w, self.feed, [(full, 1.0, 6.0)], t0=20.0)
         self.assertEqual((done[0][1].kind, done[0][1].step_index), ("advanced", 1))
 
-    def test_a_hand_in_the_way_is_logged_once(self) -> None:
-        logs = []
-        w = Watcher(StepMachine(self.steps), self.ref, self.dir, self.feed.capture, lambda *a: READY,
-                    log=logs.append)
-        self.feed.resting_hand = True
-        run(w, self.feed, [(paint(self.ref, self.masks[0]), 1.0, 20.0)])
-        self.assertEqual(len(logs), 1)
-        self.assertIn("looks like a hand", logs[0])
-
     def test_full_two_step_session_completes(self) -> None:
         w = self.watcher()
         step1 = paint(self.ref, self.masks[0])
@@ -365,7 +249,7 @@ class WatcherTest(unittest.TestCase):
 
 
 class LayerStackTest(unittest.TestCase):
-    """A track3.layers scene: a wash over everything, then a band painted over the wash."""
+    """A layers.stack scene: a wash over everything, then a band painted over the wash."""
 
     def setUp(self) -> None:
         self.tmp = tempfile.TemporaryDirectory()
@@ -393,7 +277,7 @@ class LayerStackTest(unittest.TestCase):
         self.tmp.cleanup()
 
     def watcher(self) -> Watcher:
-        w = Watcher(StepMachine(self.steps), self.frames[1], self.dir, self.feed.capture, lambda *a: READY)
+        w = Watcher(StepMachine(self.steps), self.frames[1], self.dir, self.feed.capture)
         w.calibrate(self.feed.capture())
         return w
 

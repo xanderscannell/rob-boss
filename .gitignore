@@ -1,13 +1,4 @@
-.env
 .venv/
 __pycache__/
-spikes/spike_d/out/
-# per-rig calibration output - regenerate on each machine
-config/cam_to_proj_homography.npz
-config/tape_marks.json
-config/swatch_marks.json
-config/canvas_quad.json
-config/projector_profile.json
-config/logs/
+# layer stacks and uploads, made on first use
 scenes/
-config/rehearsal_lighting.json

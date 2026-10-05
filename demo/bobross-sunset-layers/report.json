@@ -1,0 +1,1207 @@
+{
+  "version": 3,
+  "model": "wet-on-wet back-to-front layer stack, palette-constrained",
+  "source": "demo/bobross-sunset.jpg",
+  "width": 1024,
+  "height": 683,
+  "horizon_row": 474,
+  "stage_count": 10,
+  "reconstruction": {
+    "mean_delta_e": 13.523,
+    "p95_delta_e": 25.197,
+    "p99_delta_e": 37.573,
+    "bare_canvas_fraction": 0.0,
+    "bare_canvas_delta_e": 64.713
+  },
+  "detail": {
+    "reference": 2.152,
+    "reconstruction": 0.425,
+    "retained": 0.198
+  },
+  "paintability": {
+    "max_mixes_per_step": 3,
+    "mix_limit": 3,
+    "within_mix_limit": true,
+    "pigments_used": [
+      "alizarin crimson",
+      "bright red",
+      "cadmium yellow",
+      "midnight black",
+      "phthalo blue",
+      "phthalo green",
+      "titanium white"
+    ],
+    "pigment_count": 7,
+    "regressing_steps": [],
+    "monotonic_improvement": true,
+    "role_order": [
+      "base",
+      "sky",
+      "sky",
+      "sky",
+      "distant",
+      "water",
+      "near",
+      "water",
+      "near",
+      "accent"
+    ],
+    "role_reentries": [
+      8,
+      9
+    ],
+    "depth_order_stable": true
+  },
+  "steps": [
+    {
+      "index": 1,
+      "name": "Ground wash",
+      "role": "base",
+      "mask_path": "masks/01_ground-wash.png",
+      "layer_path": "layers/01_ground-wash.png",
+      "step_path": "steps/01_ground-wash.png",
+      "depth_score": 1.0,
+      "visible_coverage": 0.00118,
+      "painted_coverage": 1.0,
+      "new_coverage": 0.00118,
+      "component_count": 1,
+      "paintable_component_count": 1,
+      "opacity": 0.55,
+      "edge_softness_px": 0,
+      "mix": [
+        {
+          "pigment": "titanium white",
+          "parts": 64
+        },
+        {
+          "pigment": "alizarin crimson",
+          "parts": 2
+        },
+        {
+          "pigment": "phthalo green",
+          "parts": 1
+        }
+      ],
+      "mix_description": "titanium white with a touch of alizarin crimson and a touch of phthalo green",
+      "mixes": [
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 64
+            },
+            {
+              "pigment": "alizarin crimson",
+              "parts": 2
+            },
+            {
+              "pigment": "phthalo green",
+              "parts": 1
+            }
+          ],
+          "description": "titanium white with a touch of alizarin crimson and a touch of phthalo green",
+          "rgb": [
+            127,
+            121,
+            144
+          ],
+          "coverage": 1.0
+        }
+      ],
+      "mix_count": 1,
+      "canvas_delta_e": 49.453,
+      "detail": 0.0,
+      "improvement_delta_e": 15.26,
+      "stroke_dir_deg": 69.5,
+      "target_rgb": [
+        102,
+        70,
+        36
+      ],
+      "value_range_rgb": [
+        [
+          67,
+          45,
+          17
+        ],
+        [
+          106,
+          76,
+          39
+        ],
+        [
+          213,
+          143,
+          94
+        ]
+      ]
+    },
+    {
+      "index": 2,
+      "name": "Sunset band",
+      "role": "sky",
+      "mask_path": "masks/02_sunset-band.png",
+      "layer_path": "layers/02_sunset-band.png",
+      "step_path": "steps/02_sunset-band.png",
+      "depth_score": 1.4577,
+      "visible_coverage": 0.16079,
+      "painted_coverage": 0.21471,
+      "new_coverage": 0.16079,
+      "component_count": 3,
+      "paintable_component_count": 2,
+      "opacity": 0.8,
+      "edge_softness_px": 31,
+      "mix": [
+        {
+          "pigment": "titanium white",
+          "parts": 8
+        },
+        {
+          "pigment": "phthalo blue",
+          "parts": 1
+        }
+      ],
+      "mix_description": "8 parts titanium white to 1 part phthalo blue",
+      "mixes": [
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 8
+            },
+            {
+              "pigment": "phthalo blue",
+              "parts": 1
+            }
+          ],
+          "description": "8 parts titanium white to 1 part phthalo blue",
+          "rgb": [
+            63,
+            106,
+            176
+          ],
+          "coverage": 0.803
+        },
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 64
+            },
+            {
+              "pigment": "phthalo blue",
+              "parts": 3
+            }
+          ],
+          "description": "64 parts titanium white to 3 parts phthalo blue",
+          "rgb": [
+            93,
+            141,
+            201
+          ],
+          "coverage": 0.135
+        },
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 32
+            },
+            {
+              "pigment": "yellow ochre",
+              "parts": 1
+            },
+            {
+              "pigment": "bright red",
+              "parts": 1
+            }
+          ],
+          "description": "titanium white with a touch of yellow ochre and a touch of bright red",
+          "rgb": [
+            241,
+            161,
+            135
+          ],
+          "coverage": 0.062
+        }
+      ],
+      "mix_count": 3,
+      "canvas_delta_e": 44.22,
+      "detail": 0.02,
+      "improvement_delta_e": 5.233,
+      "stroke_dir_deg": 0.0,
+      "target_rgb": [
+        74,
+        139,
+        226
+      ],
+      "value_range_rgb": [
+        [
+          60,
+          132,
+          225
+        ],
+        [
+          72,
+          140,
+          229
+        ],
+        [
+          90,
+          144,
+          224
+        ]
+      ]
+    },
+    {
+      "index": 3,
+      "name": "Cloud bank",
+      "role": "sky",
+      "mask_path": "masks/03_cloud-bank.png",
+      "layer_path": "layers/03_cloud-bank.png",
+      "step_path": "steps/03_cloud-bank.png",
+      "depth_score": 1.363,
+      "visible_coverage": 0.21542,
+      "painted_coverage": 0.27134,
+      "new_coverage": 0.21542,
+      "component_count": 7,
+      "paintable_component_count": 1,
+      "opacity": 0.9,
+      "edge_softness_px": 29,
+      "mix": [
+        {
+          "pigment": "titanium white",
+          "parts": 16
+        },
+        {
+          "pigment": "cadmium yellow",
+          "parts": 1
+        },
+        {
+          "pigment": "bright red",
+          "parts": 1
+        }
+      ],
+      "mix_description": "16 parts titanium white to 1 part cadmium yellow to 1 part bright red",
+      "mixes": [
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 16
+            },
+            {
+              "pigment": "cadmium yellow",
+              "parts": 1
+            },
+            {
+              "pigment": "bright red",
+              "parts": 1
+            }
+          ],
+          "description": "16 parts titanium white to 1 part cadmium yellow to 1 part bright red",
+          "rgb": [
+            242,
+            139,
+            86
+          ],
+          "coverage": 0.3822
+        },
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 24
+            },
+            {
+              "pigment": "phthalo blue",
+              "parts": 1
+            }
+          ],
+          "description": "titanium white with a touch of phthalo blue",
+          "rgb": [
+            97,
+            145,
+            203
+          ],
+          "coverage": 0.3553
+        },
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 128
+            },
+            {
+              "pigment": "bright red",
+              "parts": 4
+            },
+            {
+              "pigment": "midnight black",
+              "parts": 1
+            }
+          ],
+          "description": "titanium white with a touch of bright red and a speck of midnight black",
+          "rgb": [
+            164,
+            138,
+            134
+          ],
+          "coverage": 0.2624
+        }
+      ],
+      "mix_count": 3,
+      "canvas_delta_e": 39.3,
+      "detail": 0.04,
+      "improvement_delta_e": 4.921,
+      "stroke_dir_deg": 179.7,
+      "target_rgb": [
+        173,
+        148,
+        164
+      ],
+      "value_range_rgb": [
+        [
+          118,
+          150,
+          207
+        ],
+        [
+          174,
+          151,
+          167
+        ],
+        [
+          236,
+          143,
+          114
+        ]
+      ]
+    },
+    {
+      "index": 4,
+      "name": "Sunset band 2",
+      "role": "sky",
+      "mask_path": "masks/04_sunset-band-2.png",
+      "layer_path": "layers/04_sunset-band-2.png",
+      "step_path": "steps/04_sunset-band-2.png",
+      "depth_score": 1.2658,
+      "visible_coverage": 0.15971,
+      "painted_coverage": 0.21492,
+      "new_coverage": 0.15971,
+      "component_count": 18,
+      "paintable_component_count": 3,
+      "opacity": 1.0,
+      "edge_softness_px": 27,
+      "mix": [
+        {
+          "pigment": "titanium white",
+          "parts": 16
+        },
+        {
+          "pigment": "cadmium yellow",
+          "parts": 4
+        },
+        {
+          "pigment": "bright red",
+          "parts": 1
+        }
+      ],
+      "mix_description": "16 parts titanium white to 4 parts cadmium yellow to 1 part bright red",
+      "mixes": [
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 16
+            },
+            {
+              "pigment": "cadmium yellow",
+              "parts": 4
+            },
+            {
+              "pigment": "bright red",
+              "parts": 1
+            }
+          ],
+          "description": "16 parts titanium white to 4 parts cadmium yellow to 1 part bright red",
+          "rgb": [
+            243,
+            144,
+            57
+          ],
+          "coverage": 0.7567
+        },
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 4
+            },
+            {
+              "pigment": "phthalo blue",
+              "parts": 1
+            }
+          ],
+          "description": "4 parts titanium white to 1 part phthalo blue",
+          "rgb": [
+            47,
+            85,
+            156
+          ],
+          "coverage": 0.1414
+        },
+        {
+          "mix": [
+            {
+              "pigment": "dark sienna",
+              "parts": 8
+            },
+            {
+              "pigment": "cadmium yellow",
+              "parts": 2
+            },
+            {
+              "pigment": "phthalo blue",
+              "parts": 1
+            }
+          ],
+          "description": "8 parts dark sienna to 2 parts cadmium yellow to 1 part phthalo blue",
+          "rgb": [
+            50,
+            37,
+            29
+          ],
+          "coverage": 0.1019
+        }
+      ],
+      "mix_count": 3,
+      "canvas_delta_e": 30.036,
+      "detail": 0.18,
+      "improvement_delta_e": 9.264,
+      "stroke_dir_deg": 0.6,
+      "target_rgb": [
+        249,
+        150,
+        67
+      ],
+      "value_range_rgb": [
+        [
+          225,
+          115,
+          62
+        ],
+        [
+          251,
+          154,
+          52
+        ],
+        [
+          251,
+          151,
+          80
+        ]
+      ]
+    },
+    {
+      "index": 5,
+      "name": "Distant ridges",
+      "role": "distant",
+      "mask_path": "masks/05_distant-ridges.png",
+      "layer_path": "layers/05_distant-ridges.png",
+      "step_path": "steps/05_distant-ridges.png",
+      "depth_score": 1.1831,
+      "visible_coverage": 0.10297,
+      "painted_coverage": 0.14682,
+      "new_coverage": 0.10297,
+      "component_count": 4,
+      "paintable_component_count": 1,
+      "opacity": 0.9,
+      "edge_softness_px": 26,
+      "mix": [
+        {
+          "pigment": "titanium white",
+          "parts": 3
+        },
+        {
+          "pigment": "phthalo blue",
+          "parts": 2
+        }
+      ],
+      "mix_description": "3 parts titanium white to 2 parts phthalo blue",
+      "mixes": [
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 3
+            },
+            {
+              "pigment": "phthalo blue",
+              "parts": 2
+            }
+          ],
+          "description": "3 parts titanium white to 2 parts phthalo blue",
+          "rgb": [
+            33,
+            63,
+            131
+          ],
+          "coverage": 0.8112
+        },
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 4
+            },
+            {
+              "pigment": "indian yellow",
+              "parts": 1
+            },
+            {
+              "pigment": "dark sienna",
+              "parts": 1
+            }
+          ],
+          "description": "4 parts titanium white to 1 part indian yellow to 1 part dark sienna",
+          "rgb": [
+            122,
+            77,
+            58
+          ],
+          "coverage": 0.1888
+        }
+      ],
+      "mix_count": 2,
+      "canvas_delta_e": 25.918,
+      "detail": 0.194,
+      "improvement_delta_e": 4.118,
+      "stroke_dir_deg": 177.9,
+      "target_rgb": [
+        45,
+        71,
+        135
+      ],
+      "value_range_rgb": [
+        [
+          16,
+          42,
+          82
+        ],
+        [
+          34,
+          63,
+          124
+        ],
+        [
+          59,
+          85,
+          160
+        ]
+      ]
+    },
+    {
+      "index": 6,
+      "name": "Water plane",
+      "role": "water",
+      "mask_path": "masks/06_water-plane.png",
+      "layer_path": "layers/06_water-plane.png",
+      "step_path": "steps/06_water-plane.png",
+      "depth_score": 0.4227,
+      "visible_coverage": 0.11435,
+      "painted_coverage": 0.26394,
+      "new_coverage": 0.11435,
+      "component_count": 39,
+      "paintable_component_count": 6,
+      "opacity": 0.95,
+      "edge_softness_px": 10,
+      "mix": [
+        {
+          "pigment": "titanium white",
+          "parts": 128
+        },
+        {
+          "pigment": "phthalo blue",
+          "parts": 16
+        },
+        {
+          "pigment": "alizarin crimson",
+          "parts": 1
+        }
+      ],
+      "mix_description": "titanium white with 16 parts phthalo blue and a speck of alizarin crimson",
+      "mixes": [
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 128
+            },
+            {
+              "pigment": "phthalo blue",
+              "parts": 16
+            },
+            {
+              "pigment": "alizarin crimson",
+              "parts": 1
+            }
+          ],
+          "description": "titanium white with 16 parts phthalo blue and a speck of alizarin crimson",
+          "rgb": [
+            63,
+            102,
+            164
+          ],
+          "coverage": 0.5725
+        },
+        {
+          "mix": [
+            {
+              "pigment": "midnight black",
+              "parts": 8
+            },
+            {
+              "pigment": "phthalo green",
+              "parts": 1
+            },
+            {
+              "pigment": "cadmium yellow",
+              "parts": 1
+            }
+          ],
+          "description": "8 parts midnight black to 1 part phthalo green to 1 part cadmium yellow",
+          "rgb": [
+            21,
+            23,
+            23
+          ],
+          "coverage": 0.2626
+        },
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 64
+            },
+            {
+              "pigment": "bright red",
+              "parts": 4
+            },
+            {
+              "pigment": "sap green",
+              "parts": 1
+            }
+          ],
+          "description": "titanium white with 4 parts bright red and a touch of sap green",
+          "rgb": [
+            202,
+            136,
+            120
+          ],
+          "coverage": 0.1649
+        }
+      ],
+      "mix_count": 3,
+      "canvas_delta_e": 19.219,
+      "detail": 0.396,
+      "improvement_delta_e": 6.699,
+      "stroke_dir_deg": 1.1,
+      "target_rgb": [
+        90,
+        106,
+        156
+      ],
+      "value_range_rgb": [
+        [
+          47,
+          45,
+          31
+        ],
+        [
+          52,
+          85,
+          153
+        ],
+        [
+          114,
+          123,
+          172
+        ]
+      ]
+    },
+    {
+      "index": 7,
+      "name": "Foreground mass",
+      "role": "near",
+      "mask_path": "masks/07_foreground-mass.png",
+      "layer_path": "layers/07_foreground-mass.png",
+      "step_path": "steps/07_foreground-mass.png",
+      "depth_score": 0.4144,
+      "visible_coverage": 0.04402,
+      "painted_coverage": 0.05308,
+      "new_coverage": 0.04402,
+      "component_count": 5,
+      "paintable_component_count": 1,
+      "opacity": 1.0,
+      "edge_softness_px": 2,
+      "mix": [
+        {
+          "pigment": "midnight black",
+          "parts": 1
+        }
+      ],
+      "mix_description": "midnight black",
+      "mixes": [
+        {
+          "mix": [
+            {
+              "pigment": "midnight black",
+              "parts": 1
+            }
+          ],
+          "description": "midnight black",
+          "rgb": [
+            20,
+            20,
+            22
+          ],
+          "coverage": 0.8028
+        },
+        {
+          "mix": [
+            {
+              "pigment": "van dyke brown",
+              "parts": 32
+            },
+            {
+              "pigment": "cadmium yellow",
+              "parts": 4
+            },
+            {
+              "pigment": "prussian blue",
+              "parts": 1
+            }
+          ],
+          "description": "van dyke brown with 4 parts cadmium yellow and a touch of prussian blue",
+          "rgb": [
+            57,
+            47,
+            33
+          ],
+          "coverage": 0.1468
+        },
+        {
+          "mix": [
+            {
+              "pigment": "yellow ochre",
+              "parts": 4
+            },
+            {
+              "pigment": "titanium white",
+              "parts": 2
+            },
+            {
+              "pigment": "dark sienna",
+              "parts": 1
+            }
+          ],
+          "description": "4 parts yellow ochre to 2 parts titanium white to 1 part dark sienna",
+          "rgb": [
+            125,
+            80,
+            49
+          ],
+          "coverage": 0.0503
+        }
+      ],
+      "mix_count": 3,
+      "canvas_delta_e": 18.105,
+      "detail": 0.418,
+      "improvement_delta_e": 1.113,
+      "stroke_dir_deg": 38.5,
+      "target_rgb": [
+        22,
+        20,
+        18
+      ],
+      "value_range_rgb": [
+        [
+          10,
+          10,
+          10
+        ],
+        [
+          51,
+          48,
+          45
+        ],
+        [
+          185,
+          139,
+          106
+        ]
+      ]
+    },
+    {
+      "index": 8,
+      "name": "Sun path on water",
+      "role": "water",
+      "mask_path": "masks/08_sun-path-on-water.png",
+      "layer_path": "layers/08_sun-path-on-water.png",
+      "step_path": "steps/08_sun-path-on-water.png",
+      "depth_score": 0.3883,
+      "visible_coverage": 0.15273,
+      "painted_coverage": 0.19156,
+      "new_coverage": 0.15273,
+      "component_count": 52,
+      "paintable_component_count": 3,
+      "opacity": 0.95,
+      "edge_softness_px": 10,
+      "mix": [
+        {
+          "pigment": "titanium white",
+          "parts": 64
+        },
+        {
+          "pigment": "cadmium yellow",
+          "parts": 4
+        },
+        {
+          "pigment": "alizarin crimson",
+          "parts": 1
+        }
+      ],
+      "mix_description": "titanium white with 4 parts cadmium yellow and a touch of alizarin crimson",
+      "mixes": [
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 64
+            },
+            {
+              "pigment": "cadmium yellow",
+              "parts": 4
+            },
+            {
+              "pigment": "alizarin crimson",
+              "parts": 1
+            }
+          ],
+          "description": "titanium white with 4 parts cadmium yellow and a touch of alizarin crimson",
+          "rgb": [
+            237,
+            150,
+            94
+          ],
+          "coverage": 0.3666
+        },
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 8
+            },
+            {
+              "pigment": "phthalo blue",
+              "parts": 1
+            }
+          ],
+          "description": "8 parts titanium white to 1 part phthalo blue",
+          "rgb": [
+            63,
+            106,
+            176
+          ],
+          "coverage": 0.3565
+        },
+        {
+          "mix": [
+            {
+              "pigment": "phthalo green",
+              "parts": 4
+            },
+            {
+              "pigment": "alizarin crimson",
+              "parts": 4
+            },
+            {
+              "pigment": "midnight black",
+              "parts": 1
+            }
+          ],
+          "description": "4 parts phthalo green to 4 parts alizarin crimson to 1 part midnight black",
+          "rgb": [
+            25,
+            31,
+            39
+          ],
+          "coverage": 0.2768
+        }
+      ],
+      "mix_count": 3,
+      "canvas_delta_e": 14.052,
+      "detail": 0.417,
+      "improvement_delta_e": 4.054,
+      "stroke_dir_deg": 6.0,
+      "target_rgb": [
+        124,
+        110,
+        120
+      ],
+      "value_range_rgb": [
+        [
+          29,
+          28,
+          28
+        ],
+        [
+          51,
+          108,
+          187
+        ],
+        [
+          222,
+          140,
+          94
+        ]
+      ]
+    },
+    {
+      "index": 9,
+      "name": "Foreground mass 2",
+      "role": "near",
+      "mask_path": "masks/09_foreground-mass-2.png",
+      "layer_path": "layers/09_foreground-mass-2.png",
+      "step_path": "steps/09_foreground-mass-2.png",
+      "depth_score": 0.2892,
+      "visible_coverage": 0.03817,
+      "painted_coverage": 0.0382,
+      "new_coverage": 0.03817,
+      "component_count": 8,
+      "paintable_component_count": 1,
+      "opacity": 0.9,
+      "edge_softness_px": 2,
+      "mix": [
+        {
+          "pigment": "midnight black",
+          "parts": 4
+        },
+        {
+          "pigment": "phthalo blue",
+          "parts": 4
+        },
+        {
+          "pigment": "alizarin crimson",
+          "parts": 1
+        }
+      ],
+      "mix_description": "4 parts midnight black to 4 parts phthalo blue to 1 part alizarin crimson",
+      "mixes": [
+        {
+          "mix": [
+            {
+              "pigment": "midnight black",
+              "parts": 4
+            },
+            {
+              "pigment": "phthalo blue",
+              "parts": 4
+            },
+            {
+              "pigment": "alizarin crimson",
+              "parts": 1
+            }
+          ],
+          "description": "4 parts midnight black to 4 parts phthalo blue to 1 part alizarin crimson",
+          "rgb": [
+            21,
+            26,
+            33
+          ],
+          "coverage": 0.4834
+        },
+        {
+          "mix": [
+            {
+              "pigment": "phthalo blue",
+              "parts": 4
+            },
+            {
+              "pigment": "yellow ochre",
+              "parts": 2
+            },
+            {
+              "pigment": "alizarin crimson",
+              "parts": 1
+            }
+          ],
+          "description": "4 parts phthalo blue to 2 parts yellow ochre to 1 part alizarin crimson",
+          "rgb": [
+            26,
+            42,
+            60
+          ],
+          "coverage": 0.2945
+        },
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 8
+            },
+            {
+              "pigment": "prussian blue",
+              "parts": 1
+            },
+            {
+              "pigment": "alizarin crimson",
+              "parts": 1
+            }
+          ],
+          "description": "8 parts titanium white to 1 part prussian blue to 1 part alizarin crimson",
+          "rgb": [
+            57,
+            70,
+            101
+          ],
+          "coverage": 0.2221
+        }
+      ],
+      "mix_count": 3,
+      "canvas_delta_e": 13.728,
+      "detail": 0.401,
+      "improvement_delta_e": 0.323,
+      "stroke_dir_deg": 170.1,
+      "target_rgb": [
+        28,
+        39,
+        57
+      ],
+      "value_range_rgb": [
+        [
+          12,
+          21,
+          33
+        ],
+        [
+          38,
+          53,
+          77
+        ],
+        [
+          83,
+          99,
+          136
+        ]
+      ]
+    },
+    {
+      "index": 10,
+      "name": "Highlights and accents",
+      "role": "accent",
+      "mask_path": "masks/10_highlights-and-accents.png",
+      "layer_path": "layers/10_highlights-and-accents.png",
+      "step_path": "steps/10_highlights-and-accents.png",
+      "depth_score": 0.0,
+      "visible_coverage": 0.01066,
+      "painted_coverage": 0.01066,
+      "new_coverage": 0.01066,
+      "component_count": 56,
+      "paintable_component_count": 3,
+      "opacity": 1.0,
+      "edge_softness_px": 2,
+      "mix": [
+        {
+          "pigment": "titanium white",
+          "parts": 128
+        },
+        {
+          "pigment": "cadmium yellow",
+          "parts": 8
+        },
+        {
+          "pigment": "bright red",
+          "parts": 1
+        }
+      ],
+      "mix_description": "titanium white with 8 parts cadmium yellow and a speck of bright red",
+      "mixes": [
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 128
+            },
+            {
+              "pigment": "cadmium yellow",
+              "parts": 8
+            },
+            {
+              "pigment": "bright red",
+              "parts": 1
+            }
+          ],
+          "description": "titanium white with 8 parts cadmium yellow and a speck of bright red",
+          "rgb": [
+            249,
+            201,
+            96
+          ],
+          "coverage": 0.7128
+        },
+        {
+          "mix": [
+            {
+              "pigment": "titanium white",
+              "parts": 128
+            },
+            {
+              "pigment": "cadmium yellow",
+              "parts": 2
+            },
+            {
+              "pigment": "van dyke brown",
+              "parts": 1
+            }
+          ],
+          "description": "titanium white with a touch of cadmium yellow and a speck of van dyke brown",
+          "rgb": [
+            216,
+            201,
+            139
+          ],
+          "coverage": 0.2872
+        }
+      ],
+      "mix_count": 2,
+      "canvas_delta_e": 13.523,
+      "detail": 0.425,
+      "improvement_delta_e": 0.206,
+      "stroke_dir_deg": 112.4,
+      "target_rgb": [
+        247,
+        211,
+        120
+      ],
+      "value_range_rgb": [
+        [
+          159,
+          148,
+          134
+        ],
+        [
+          249,
+          205,
+          98
+        ],
+        [
+          250,
+          225,
+          151
+        ]
+      ]
+    }
+  ]
+}

@@ -4,8 +4,8 @@ import unittest
 
 import numpy as np
 
-from track3.layers import Stage, delta_e76, paint, quantize_to_mixes, rgb_to_lab
-from track3.palette import PIGMENT_NAMES, describe_mix, mix_rgb, nearest_mix
+from layers.stack import Stage, delta_e76, paint, quantize_to_mixes, rgb_to_lab
+from layers.palette import PIGMENT_NAMES, describe_mix, mix_rgb, nearest_mix
 
 
 def _delta_e(first, second) -> float:

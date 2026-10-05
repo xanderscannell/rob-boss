@@ -1,9 +1,0 @@
-{
-  "reference": "fixtures/spike_c/bobross-sunset.jpg",
-  "scene": "scenes/bobross-sunset-layers",
-  "planted": {
-    "step": 2,
-    "kind": "too_dark",
-    "how": "paint it with the step's mix plus an extra 2 parts of burnt umber, so the band comes out clearly too dark."
-  }
-}
